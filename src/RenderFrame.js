@@ -3,18 +3,36 @@ import Box from './BulmaComponents/box.js';
 import Tabs from './BulmaComponents/tabs.js';
 
 const RenderFrame = (props) => {
-  const testData = JSON.stringify(props.sheets)
   return (
           <Box style={{'height': '85vh'}}>
             <Tabs>
-              <li className='is-active'><a>Sheet 0</a></li>
-              <li><a>Sheet 1</a></li>
-              <li><a>Sheet 2</a></li>
-              <li><a>Sheet 3</a></li>
+              {props.sheets.map((sheet, id) => (
+                <li className={props.activeSheet === id ? 'is-active' : ''} key={id}>
+                  <a onClick={props.handleActiveSheet(id)}>Sheet {id}</a>
+                </li>
+              ))}
             </Tabs>
-            {testData}
+            <SheetRender activeSheet={props.activeSheet} sheets={props.sheets}/>
           </Box>
         )
 }
 
+
+const SheetRender = (props) => {
+  const currentItems = props.sheets[props.activeSheet]
+
+  return (
+          <div>
+              {currentItems.map((item, itemId) => (
+                <ul key={itemId}>
+                  <ul>Item {itemId}:
+                  <li>width: {item['x']}</li>
+                  <li>height: {item['y']}</li>
+                  <li>Corner: {item['cornerPoint']}</li>
+                  </ul>
+                </ul>
+                ))}
+          </div>
+        )
+}
 export default RenderFrame

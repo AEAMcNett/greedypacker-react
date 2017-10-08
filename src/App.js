@@ -15,8 +15,9 @@ class App extends Component {
     super();
     this.state = {
                   items: [{x: '', y: ''}],
-                  sheets: [],
+                  sheets: [[]],
                   editing: 0,
+                  activeSheet: 0,
                   algorithms: ['shelf', 'Guillotine'], 
                   heuristics: ['First Fit',
                                'Next Fit',
@@ -42,6 +43,10 @@ class App extends Component {
       console.log(error);
     });
   }
+  
+  handleActiveSheet = (id) => () => {
+    this.setState({activeSheet: id})
+  }
 
   render() {
     return (
@@ -50,7 +55,9 @@ class App extends Component {
                 <SettingsForm clickEvent={this.handleFetchData} state={this.state}/>
                 <Columns>
                   <Column class='is-two-thirds'>
-                  <RenderFrame sheets={this.state.sheets}/>
+                  <RenderFrame handleActiveSheet={this.handleActiveSheet}
+                               sheets={this.state.sheets}
+                               activeSheet={this.state.activeSheet}/>
                   </Column>
                   <Column class='is-one-third'>
                     <ItemForm />
