@@ -11,28 +11,39 @@ const SettingsForm = (props) => {
         <div className="field is-horizontal" style={{'justifyContent': 'space-around'}}>
           <div className="field-body">
             <Field>
-              <Input cls="input is-small" placeholder="Bin Width"/>
+              <Input changeEvent={props.handleSetWidth}
+                     cls="input is-small"
+                     placeholder="Bin Width"/>
             </Field>
             <Field>
-              <Input cls="input is-small" placeholder="Bin Height"/>
+              <Input changeEvent={props.handleSetHeight}
+                     cls="input is-small"
+                     placeholder="Bin Height"/>
             </Field>
             <Field>
-                <Select options={props.state.bin_algos}/>
+                <Select changeEvent={props.handleSetBinAlgo}
+                        options={props.state.bin_algos}/>
             </Field>
             <Field>
-                <Select options={props.state.algorithms}/>
+                <Select changeEvent={props.handleSetPackAlgo}
+                options={props.state.algorithms}/>
             </Field>
             <Field>
-                <Select options={props.state.heuristics}/>
+                <Select changeEvent={props.handleSetHeuristic}
+                        options={props.state.heuristics}/>
             </Field>
             <Field>
-              <label className="label checkbox">
-                <p style={{'fontSize': '.5em'}}>Sort:</p>            
-                <Checkbox />
-              </label>
+                <Checkbox label="Sort:"
+                          style={{'fontSize': '.5em'}}
+                          defaultChecked={props.state.settings.sorting}
+                          clickEvent={props.handleSetSorting}/>
             </Field>
             <Field>
-                <Checkbox label="Rotate:" style={{'fontSize': '.5em'}}/>
+                <Checkbox label="Rotate:"
+                          style={{'fontSize': '.5em'}}
+                          defaultChecked={props.state.settings.rotation}
+                          clickEvent={props.handleSetSorting}
+                />
             </Field>
             <Field>
               <Button text="go" clickEvent={props.clickEvent} cls="is-small" />

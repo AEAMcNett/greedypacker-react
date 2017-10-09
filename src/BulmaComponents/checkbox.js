@@ -6,7 +6,11 @@ const Checkbox = (props) => {
   return (
           <label className='checkbox'>
             <p style={props.style}>{label}</p>
-            <input type='checkbox' />
+            <input type='checkbox'
+                   onClick={props.clickEvent}
+                   checked={props.checked}
+                   defaultChecked={props.defaultChecked}
+            />
           </label>
         )
 }

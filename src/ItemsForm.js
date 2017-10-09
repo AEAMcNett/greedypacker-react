@@ -1,63 +1,24 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Button from './BulmaComponents/button.js';
 import Input from './BulmaComponents/input.js';
 import { Panel, PanelHeading, PanelBlock } from './BulmaComponents/panel.js';
 
 
 
-class ItemForm extends Component {
-  constructor() {
-    super();
-    this.state = { items: [{x: '', y: '', edit: false}],
-                   editing: undefined,
-                   itemBlock: { 'display': 'flex', 'justifyContent': 'space-around'}
-                }
-  }
-
-  handleAddItem = () => {
-    this.setState({
-      items: this.state.items.concat([{x: '', y: ''}]),
-      editing: this.state.items.length
-    })
-  }
-
-  handleEditItem = (id) => () => {
-    id === this.state.editing ?
-      this.setState({editing: ''}) : this.setState({editing: id})  
-  }
-
-  handleFormUpdate = (id, [field]) => (e) => {
-    const newItems = this.state.items.map((item, sidx) => {
-      if (id !== sidx) return item;
-      if (/^\d+$/.test(e.target.value) || e.target.value === '') {
-        return { ...item, [field]: e.target.value };
-      } else { return item }
-    })
-    this.setState({items: newItems})
-  }
-
-  handleDelItem = (id) => ()  => {
-    this.setState({
-      items: this.state.items.filter((s, sidx) => id !== sidx),
-      editing: '',
-    });
-  }
-
-  render() {
+const ItemForm = (props) => {
     return (
       <Panel>
         <PanelHeading>
           Items
-          <Button clickEvent={this.handleAddItem} cls='is-small' style={{'float': 'right'}} text='+'/>
+          <Button clickEvent={props.handleAddItem} cls='is-small' style={{'float': 'right'}} text='+'/>
         </PanelHeading>
-        <ItemMap editing={this.state.editing}
-                 items={this.state.items}
-                 handleEditItem={this.handleEditItem}
-                 handleFormUpdate={this.handleFormUpdate}
-                 handleDelItem={this.handleDelItem} />
+        <ItemMap editing={props.state.editing}
+                 items={props.state.items}
+                 handleEditItem={props.handleEditItem}
+                 handleFormUpdate={props.handleFormUpdate}
+                 handleDelItem={props.handleDelItem} />
       </Panel>
     )
-  }
 }
 
 
