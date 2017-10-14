@@ -2,7 +2,8 @@ import React from 'react';
 
 
 const Input = (props) => {
-  return <input className={ props.cls ? 'input '.concat(props.cls) : 'input'} 
+  const cls = 'input '.concat(props.cls, ' ', props.color)
+  return <input className={cls} 
                 onChange={props.changeEvent}
                 value={props.value}
                 type={props.type}

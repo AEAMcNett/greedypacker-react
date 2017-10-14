@@ -5,52 +5,80 @@ import Select from './BulmaComponents/select.js';
 import Checkbox from './BulmaComponents/checkbox.js';
 import Button from './BulmaComponents/button.js';
 
+class SettingsForm extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+                  wcolor: '',
+                  hcolor: ''
+                 }
 
-const SettingsForm = (props) => {
- return (
+
+    this.validate = () => {
+      if (/^\d+$/.test(this.state.settings.bin_height) !== true) {
+        this.setState({wcolor: 'is-danger'})
+      } else {
+        this.setState({wcolor: ''})
+      }
+      if (/^\d+$/.test(this.state.settings.bin_height) !== true) {
+        this.setState({hcolor: 'is-danger'})
+      } else {
+        this.setState({hcolor: ''})
+      }
+    }
+    this.handleSubmit = () => {
+      this.validate()
+      this.props.handleSubmit()
+    }
+  }
+  render() {
+    return (
         <div className="field is-horizontal" style={{'justifyContent': 'space-around'}}>
           <div className="field-body">
             <Field>
-              <Input changeEvent={props.handleSetWidth}
+              <Input changeEvent={this.props.handleSetWidth}
                      cls="input is-small"
+                     color={this.state.wcolor}
                      placeholder="Bin Width"/>
             </Field>
             <Field>
-              <Input changeEvent={props.handleSetHeight}
+              <Input changeEvent={this.props.handleSetHeight}
                      cls="input is-small"
+                     color={this.state.hcolor}
                      placeholder="Bin Height"/>
             </Field>
             <Field>
-                <Select changeEvent={props.handleSetBinAlgo}
-                        options={props.state.bin_algos}/>
+                <Select changeEvent={this.props.handleSetBinAlgo}
+                        options={this.props.state.bin_algos}/>
             </Field>
             <Field>
-                <Select changeEvent={props.handleSetPackAlgo}
-                options={props.state.algorithms}/>
+                <Select changeEvent={this.props.handleSetPackAlgo}
+                options={this.props.state.algorithms}/>
             </Field>
             <Field>
-                <Select changeEvent={props.handleSetHeuristic}
-                        options={props.state.heuristics}/>
+                <Select changeEvent={this.props.handleSetHeuristic}
+                        options={this.props.state.heuristics}/>
             </Field>
             <Field>
                 <Checkbox label="Sort:"
                           style={{'fontSize': '.5em'}}
-                          defaultChecked={props.state.settings.sorting}
-                          clickEvent={props.handleSetSorting}/>
+                          defaultChecked={this.props.state.settings.sorting}
+                          clickEvent={this.props.handleSetSorting}/>
             </Field>
             <Field>
                 <Checkbox label="Rotate:"
                           style={{'fontSize': '.5em'}}
-                          defaultChecked={props.state.settings.rotation}
-                          clickEvent={props.handleSetSorting}
+                          defaultChecked={this.props.state.settings.rotation}
+                          clickEvent={this.props.handleSetSorting}
                 />
             </Field>
             <Field>
-              <Button text="go" clickEvent={props.clickEvent} cls="is-small" />
+              <Button text="go" clickEvent={this.props.clickEvent} cls="is-small" />
             </Field>
           </div>
         </div>
- )
+    )
+ }
 }
 
 export default SettingsForm

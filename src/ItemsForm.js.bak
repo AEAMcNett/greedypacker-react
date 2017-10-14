@@ -1,0 +1,129 @@
+import React from 'react';
+import Button from './BulmaComponents/button.js';
+import Input from './BulmaComponents/input.js';
+import { Panel, PanelHeading, PanelBlock } from './BulmaComponents/panel.js';
+
+
+
+const ItemForm = (props) => {
+    return (
+      <Panel>
+        <PanelHeading>
+          Items
+          <Button clickEvent={props.handleAddItem} cls='is-small' style={{'float': 'right'}} text='+'/>
+        </PanelHeading>
+        <ItemMap editing={props.state.editing}
+                 items={props.state.items}
+                 handleEditItem={props.handleEditItem}
+                 handleFormUpdate={props.handleFormUpdate}
+                 handleDelItem={props.handleDelItem} />
+      </Panel>
+    )
+}
+
+
+const ItemMap = (props) => {
+  const items = props.items.map((item, id) =>
+    props.editing !== id ? 
+      <ItemDisplay key={id} item={item} clickEvent={props.handleEditItem(id)} 
+                   style={{ 'display': 'flex',
+                   'justifyContent': 'space-around'}} />
+      : <ItemEdit handleFormUpdates={props.handleFormUpdates}
+                  key={id} id={id} item={item} 
+                  changeEvent={props.handleFormUpdate} 
+                  handleSubmit={props.handleEditItem(id)}
+                  handleDelItem={props.handleDelItem}
+                  style={{ 'display': 'flex',
+                           'justifyContent': 'space-around'}} />
+  )
+  return items
+}
+
+const ItemDisplay = (props) => {
+  return (
+    <PanelBlock type='anchor' clickEvent={props.clickEvent} style={props.style}>
+      <p>Width: {props.item.x}</p>
+      <p>Height: {props.item.y}</p>
+    </PanelBlock>
+  )
+}
+
+class ItemEdit extends React.Component {
+  constructor(props) {
+    super(props)
+    /// Store duplicate copies of items with editing and validation flags
+    this.state = {  xcolor: '',
+                    ycolor: '',
+                    items: { 'x': '1',
+                             'y': '2',
+                             'editing': true,
+                             'validation': false
+                           }
+                 }
+    /// Move edit functions into here then pass this.state back up
+    
+    //const deleteItem = (item) => {
+    //  var newItems = {...this.state.items}
+    //  newItems.filter((el) => el !== item) 
+    //  // filter vaidation and editing flags then:
+    //  this.props.handleFormUpdates(newItems)
+    //}
+
+    //const submitItem = (item) => {
+    //  var newItems = {...this.state.items, item}
+    //  this.props.handleFormUpdates(newItems)
+    //}
+
+
+    this.validate = () => {
+      let valid = true
+      if (/^\d+$/.test(this.props.item.x) !== true) {
+        this.setState({xcolor: 'is-danger'})
+        valid = false
+      } else {
+        this.setState({xcolor: ''})
+      }
+      if (/^\d+$/.test(this.props.item.y) !== true) {
+        this.setState({ycolor: 'is-danger'})
+        valid = false
+      } else {
+        this.setState({ycolor: ''})
+      }
+      return valid
+    }
+    this.handleSubmit = () => {
+      const isValid = this.validate()
+      if (isValid) this.props.handleSubmit()
+    }
+  }
+  render() { 
+    return (
+        <PanelBlock type='anchor' style={this.props.style}>
+          <Input changeEvent={this.props.changeEvent(this.props.id, 'x')} 
+                 cls="is-small item-form"
+                 placeholder="width"
+                 color={this.state.xcolor}
+                 value={this.props.item.x}
+                 type="text"
+                 style={{'width':'25%'}}/>
+          <Input changeEvent={this.props.changeEvent(this.props.id, 'y')} 
+                 cls="is-small item-form"
+                 placeholder="height"
+                 color={this.state.ycolor}
+                 value={this.props.item.y}
+                 type="text"
+                 style={{'width':'25%'}}/>
+          <Button clickEvent={this.handleSubmit}
+                  cls="is-small" 
+                  style={{'float':'right'}}
+                  text='✓'/>
+          <Button clickEvent={this.props.handleDelItem(this.props.id)}
+                  cls="is-small" 
+                  style={{'float':'right'}}
+                  text='☓'/>
+        </PanelBlock>
+    )
+  }
+}
+
+export default ItemForm

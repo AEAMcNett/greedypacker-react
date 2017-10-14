@@ -18,7 +18,7 @@ class App extends Component {
                   sheets: [[]],
                   editing: undefined,
                   activeSheet: 0,
-                  algorithms: ['shelf', 'Guillotine'], 
+                  algorithms: ['shelf', 'guillotine'], 
                   heuristics: ['First Fit',
                                'Next Fit',
                                'Best Width Fit',
@@ -40,6 +40,8 @@ class App extends Component {
 
   
   //// SettingsForm Methods
+
+
   handleSetWidth = (e) => {
     var settings = {...this.state.settings}
     settings['bin_width'] = e.target.value ? parseInt(e.target.value, 10) : 0
@@ -60,6 +62,15 @@ class App extends Component {
     this.setState({settings})
   }
 
+  // setNewSewttingsState({'bin_algo':'foo'})
+  setNewSettingsState = (newSettings) => {
+    this.setState({
+       settings: {
+          ...this.state.settings,
+          newSettings
+          }
+          })
+  }
 
   handleSetPackAlgo = (e) => {
     var settings = {...this.state.settings}
@@ -90,34 +101,9 @@ class App extends Component {
   }
 
 
-  //// Item Form Methods
-  handleAddItem = () => {
-    this.setState({
-      items: this.state.items.concat([{x: '', y: ''}]),
-      editing: this.state.items.length
-    })
-  }
-
-  handleEditItem = (id) => () => {
-    id === this.state.editing ?
-      this.setState({editing: ''}) : this.setState({editing: id})  
-  }
-
-  handleFormUpdate = (id, [field]) => (e) => {
-    const newItems = this.state.items.map((item, sidx) => {
-      if (id !== sidx) return item;
-      if (/^\d+$/.test(e.target.value) || e.target.value === '') {
-        return { ...item, [field]: e.target.value };
-      } else { return item }
-    })
-    this.setState({items: newItems})
-  }
-
-  handleDelItem = (id) => ()  => {
-    this.setState({
-      items: this.state.items.filter((s, sidx) => id !== sidx),
-      editing: '',
-    });
+  //// Sync item list
+  handleFormUpdates = (newItems) => {
+    this.setState({items: newItems })
   }
 
 
@@ -125,6 +111,7 @@ class App extends Component {
   
 
   handleFetchData = () => {
+    console.log(this.state.items)
     const items = this.state.items.map(item => { return [parseInt(item['x'], 10), parseInt(item['y'], 10)]})
     const data = { 'items': items, 
                    'binmanager': this.state.settings
@@ -165,11 +152,7 @@ class App extends Component {
                                activeSheet={this.state.activeSheet}/>
                   </Column>
                   <Column class='is-one-third'>
-                    <ItemForm state={this.state}
-                              handleAddItem={this.handleAddItem}
-                              handleEditItem={this.handleEditItem}
-                              handleDelItem={this.handleDelItem}
-                              handleFormUpdate={this.handleFormUpdate}/>
+                    <ItemForm handleFormUpdates={this.handleFormUpdates} />
                   </Column>
                 </Columns>
               </Column>
