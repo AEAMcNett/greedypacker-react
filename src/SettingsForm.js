@@ -60,10 +60,8 @@ class SettingsForm extends React.Component {
                         options={this.props.state.heuristics}/>
             </Field>
             <Field>
-                <Checkbox label="Sort:"
-                          style={{'fontSize': '.5em'}}
-                          defaultChecked={this.props.state.settings.sorting}
-                          clickEvent={this.props.handleSetSorting}/>
+                <Select changeEvent={this.props.handleSetSorting}
+                        options={this.props.state.sorting}/>
             </Field>
             <Field>
                 <Checkbox label="Rotate:"

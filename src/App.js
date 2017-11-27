@@ -18,7 +18,7 @@ class App extends Component {
                   sheets: [[]],
                   editing: undefined,
                   activeSheet: 0,
-                  algorithms: ['shelf', 'guillotine'], 
+                  algorithms: ['Shelf', 'Guillotine', 'Maximal Rectangle', 'Skyline'], 
                   heuristics: ['First Fit',
                                'Next Fit',
                                'Best Width Fit',
@@ -27,13 +27,50 @@ class App extends Component {
                                'Worst Width Fit',
                                'Worst Height Fit',
                                'Worst Area Fit'],
+                  h_choices:  {'Shelf':
+                                ['First Fit',
+                                 'Next Fit',
+                                 'Best Width Fit',
+                                 'Best Height Fit',
+                                 'Best Area Fit',
+                                 'Worst Width Fit',
+                                 'Worst Height Fit',
+                                 'Worst Area Fit'
+                                ],
+                               'Guillotine':
+                                ['Best Shortside',
+                                 'Best Longside',
+                                 'Best Area',
+                                 'Worst Shortside',
+                                 'Worst Longside',
+                                 'Worst Area',
+                                ],
+                                'Maximal Rectange':
+                                ['Best Shortside',
+                                 'Best Longside',
+                                 'Best Area',
+                                 'Worst Shortside',
+                                 'Worst Longside',
+                                 'Worst Area',
+                                 'Bottom Left',
+                                 'Contact Point',
+                                ],
+                                'Skyline':
+                                ['Bottom Left',
+                                 'Best Fit'
+                                ]
+                              },
+                  sorting:    ['ASCA', 'DESCA', 'ASCSS', 'DESCSS',
+                               'ASCLS', 'DESCLS', 'ASCPERIM', 'DESCPERIM',
+                               'ASCDIFF', 'DESCDIFF', 'ASCRATIO', 'DESCRATIO', 'None'],
                   bin_algos:  ['bin first fit', 'bin best fit'],
                   settings:   {'bin_width': 10, 
                                'bin_height': 5, 
                                'bin_algo': 'bin_best_fit', 
-                               'pack_algo': 'guillotine', 
-                               'heuristic': 'best_width_fit', 
+                               'pack_algo': 'shelf', 
+                               'heuristic': 'first_fit', 
                                'sorting': true, 
+                               'sorting_heuristic': 'DESCA',
                                'rotation': true } 
                  }  
   }
@@ -73,22 +110,27 @@ class App extends Component {
   }
 
   handleSetPackAlgo = (e) => {
+    const algo = e.target.value    
+    const heuristics = this.state.h_choices[e.target.value] 
     var settings = {...this.state.settings}
-    settings['pack_algo'] = e.target.value.replace(/ /g,"_");
-    this.setState({settings})
+
+    settings['pack_algo'] = algo.replace(/ /g,"_").toLowerCase()
+    settings['heuristic'] = this.state['h_choices'][algo][0].replace(/ /g,"_").toLowerCase()
+    this.setState({settings, heuristics})
   }
 
 
   handleSetHeuristic = (e) => {
     var settings = {...this.state.settings}
-    settings['heuristic'] = e.target.value.replace(/ /g,"_");
+    settings['heuristic'] = e.target.value.replace(/ /g,"_").toLowerCase()
     this.setState({settings})
   }
 
 
-  handleSetSorting = () => {
+  handleSetSorting = (e) => {
     var settings = {...this.state.settings}
-    settings['sorting'] = !settings['sorting']
+    settings['sorting_heuristic'] = e.target.value 
+    e.target.value == 'None' ? settings['sorting'] = false : settings['sorting'] = true
     this.setState({settings})
   }
 
@@ -96,7 +138,6 @@ class App extends Component {
   handleSetRotation = () => {
     var settings = {...this.state.settings}
     settings['rotation'] = !settings['rotation']
-    console.log(settings['rotation'])
     this.setState({settings})
   }
 
@@ -109,9 +150,7 @@ class App extends Component {
 
   //// Ajax Methods
   
-
   handleFetchData = () => {
-    console.log(this.state.items)
     const items = this.state.items.map(item => { return [parseInt(item['x'], 10), parseInt(item['y'], 10)]})
     const data = { 'items': items, 
                    'binmanager': this.state.settings
