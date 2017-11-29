@@ -6,7 +6,9 @@ const Field = (props) => {
   return (
           <div className="field">
           {label && 
-            <label className="label"><p style={props.style}>{label}</p></label>}
+            <label className="label is-small">
+              <p style={props.style}>{label}</p>
+            </label>}
           {props.children}
           </div>
         )

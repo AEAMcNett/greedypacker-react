@@ -45,7 +45,7 @@ class App extends Component {
                                  'Worst Longside',
                                  'Worst Area',
                                 ],
-                                'Maximal Rectange':
+                                'Maximal Rectangle':
                                 ['Best Shortside',
                                  'Best Longside',
                                  'Best Area',
@@ -71,13 +71,14 @@ class App extends Component {
                                'heuristic': 'first_fit', 
                                'sorting': true, 
                                'sorting_heuristic': 'DESCA',
-                               'rotation': true } 
+                               'rotation': true, 
+                               'wastemap': true,
+                               'rectangle_merge': true} 
                  }  
   }
 
   
   //// SettingsForm Methods
-
 
   handleSetWidth = (e) => {
     var settings = {...this.state.settings}
@@ -99,7 +100,7 @@ class App extends Component {
     this.setState({settings})
   }
 
-  // setNewSewttingsState({'bin_algo':'foo'})
+
   setNewSettingsState = (newSettings) => {
     this.setState({
        settings: {
@@ -108,6 +109,7 @@ class App extends Component {
           }
           })
   }
+
 
   handleSetPackAlgo = (e) => {
     const algo = e.target.value    
@@ -138,6 +140,12 @@ class App extends Component {
   handleSetRotation = () => {
     var settings = {...this.state.settings}
     settings['rotation'] = !settings['rotation']
+    this.setState({settings})
+  }
+
+  handleSetWastemap = (e) => {
+    var settings = {...this.state.settings}
+    settings['wastemap'] = e.target.value
     this.setState({settings})
   }
 
