@@ -35,17 +35,15 @@ class SettingsForm extends React.Component {
     return (
         <div className="field is-horizontal" style={{'justifyContent': 'space-around'}}>
           <div className="field-body">
-            <Field label='bin dimensions'>
+            <Field label='bin width'>
               <Input changeEvent={this.props.handleSetWidth}
                      cls="input is-small"
-                     color={this.state.wcolor}
-                     placeholder="Bin Width"/>
+                     color={this.state.wcolor} />
             </Field>
-            <Field label='.'>
+            <Field label='bin height'>
               <Input changeEvent={this.props.handleSetHeight}
                      cls="input is-small"
-                     color={this.state.hcolor}
-                     placeholder="Bin Height"/>
+                     color={this.state.hcolor} />
             </Field>
             <Field label='bin select algorithm'>
                 <Select changeEvent={this.props.handleSetBinAlgo}
@@ -65,9 +63,14 @@ class SettingsForm extends React.Component {
             </Field>
             {this.props.state.settings.pack_algo === 'shelf' || this.props.state.settings.pack_algo === 'skyline' ? (
               <Field label='wastemap'>
-                <Select changeEvent={this.props.handleSetSorting}
+                <Select changeEvent={this.props.handleSetWastemap}
                         options={['True', 'False']} />
               </Field> ) : null }
+            {this.props.state.settings.pack_algo === 'guillotine' ? (
+              <Field label='rectangle merge'>
+                <Select changeEvent={this.props.handleSetRectangleMerge}
+                        options={['True', 'False']} />
+              </Field>) :null }
             <Field>
                 <Checkbox label="Rotate:"
                           style={{'fontSize': '.5em'}}
@@ -82,13 +85,6 @@ class SettingsForm extends React.Component {
         </div>
     )
  }
-}
-
-const Optimizations = (props) => {
-  return (
-    <div>
-    </div>
-  )
 }
 
 export default SettingsForm

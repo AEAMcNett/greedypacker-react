@@ -64,8 +64,8 @@ class App extends Component {
                                'ASCLS', 'DESCLS', 'ASCPERIM', 'DESCPERIM',
                                'ASCDIFF', 'DESCDIFF', 'ASCRATIO', 'DESCRATIO', 'None'],
                   bin_algos:  ['bin first fit', 'bin best fit'],
-                  settings:   {'bin_width': 10, 
-                               'bin_height': 5, 
+                  settings:   {'bin_width': 8, 
+                               'bin_height': 4, 
                                'bin_algo': 'bin_best_fit', 
                                'pack_algo': 'shelf', 
                                'heuristic': 'first_fit', 
@@ -132,7 +132,7 @@ class App extends Component {
   handleSetSorting = (e) => {
     var settings = {...this.state.settings}
     settings['sorting_heuristic'] = e.target.value 
-    e.target.value == 'None' ? settings['sorting'] = false : settings['sorting'] = true
+    e.target.value === 'None' ? settings['sorting'] = false : settings['sorting'] = true
     this.setState({settings})
   }
 
@@ -145,10 +145,15 @@ class App extends Component {
 
   handleSetWastemap = (e) => {
     var settings = {...this.state.settings}
-    settings['wastemap'] = e.target.value
+    e.target.value === 'True' ? settings['wastemap'] = true : settings['wastemap'] = false
     this.setState({settings})
   }
 
+  handleSetRectangleMerge = (e) => {
+    var settings = {...this.state.settings}
+    e.target.value === 'True' ? settings['rectangle_merge'] = true : settings['rectangle_merge'] = false
+    this.setState({settings})
+  }
 
   //// Sync item list
   handleFormUpdates = (newItems) => {
@@ -190,6 +195,8 @@ class App extends Component {
                               handleSetHeuristic={this.handleSetHeuristic}
                               handleSetSorting={this.handleSetSorting}
                               handleSetRotation={this.handleSetRotation}
+                              handleSetWastemap={this.handleSetWastemap}
+                              handleSetRectangleMerge={this.handleSetRectangleMerge}
                               clickEvent={this.handleFetchData} 
                               state={this.state}/>
                 <Columns>
