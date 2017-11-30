@@ -8,6 +8,7 @@ import RenderFrame from './RenderFrame.js';
 
 import Columns from './BulmaComponents/columns.js';
 import Column from './BulmaComponents/column.js';
+import { h_choices, sorting_choices, bin_algo_choices, algo_choices } from './constants.js';
 
 
 class App extends Component {
@@ -18,52 +19,10 @@ class App extends Component {
                   sheets: [[]],
                   editing: undefined,
                   activeSheet: 0,
-                  algorithms: ['Shelf', 'Guillotine', 'Maximal Rectangle', 'Skyline'], 
-                  heuristics: ['First Fit',
-                               'Next Fit',
-                               'Best Width Fit',
-                               'Best Height Fit',
-                               'Best Area Fit',
-                               'Worst Width Fit',
-                               'Worst Height Fit',
-                               'Worst Area Fit'],
-                  h_choices:  {'Shelf':
-                                ['First Fit',
-                                 'Next Fit',
-                                 'Best Width Fit',
-                                 'Best Height Fit',
-                                 'Best Area Fit',
-                                 'Worst Width Fit',
-                                 'Worst Height Fit',
-                                 'Worst Area Fit'
-                                ],
-                               'Guillotine':
-                                ['Best Shortside',
-                                 'Best Longside',
-                                 'Best Area',
-                                 'Worst Shortside',
-                                 'Worst Longside',
-                                 'Worst Area',
-                                ],
-                                'Maximal Rectangle':
-                                ['Best Shortside',
-                                 'Best Longside',
-                                 'Best Area',
-                                 'Worst Shortside',
-                                 'Worst Longside',
-                                 'Worst Area',
-                                 'Bottom Left',
-                                 'Contact Point',
-                                ],
-                                'Skyline':
-                                ['Bottom Left',
-                                 'Best Fit'
-                                ]
-                              },
-                  sorting:    ['ASCA', 'DESCA', 'ASCSS', 'DESCSS',
-                               'ASCLS', 'DESCLS', 'ASCPERIM', 'DESCPERIM',
-                               'ASCDIFF', 'DESCDIFF', 'ASCRATIO', 'DESCRATIO', 'None'],
-                  bin_algos:  ['bin first fit', 'bin best fit'],
+                  algorithms: algo_choices,
+                  heuristics: h_choices['Shelf'],
+                  sorting:    sorting_choices,
+                  bin_algos:  bin_algo_choices,
                   settings:   {'bin_width': 8, 
                                'bin_height': 4, 
                                'bin_algo': 'bin_best_fit', 
@@ -113,11 +72,11 @@ class App extends Component {
 
   handleSetPackAlgo = (e) => {
     const algo = e.target.value    
-    const heuristics = this.state.h_choices[e.target.value] 
+    const heuristics = h_choices[e.target.value] 
     var settings = {...this.state.settings}
 
     settings['pack_algo'] = algo.replace(/ /g,"_").toLowerCase()
-    settings['heuristic'] = this.state['h_choices'][algo][0].replace(/ /g,"_").toLowerCase()
+    settings['heuristic'] = h_choices[algo][0].replace(/ /g,"_").toLowerCase()
     this.setState({settings, heuristics})
   }
 
