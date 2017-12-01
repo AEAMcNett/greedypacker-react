@@ -1,5 +1,5 @@
 export const h_choices = {
-  'Shelf':
+  'shelf':
     ['First Fit',
      'Next Fit',
      'Best Width Fit',
@@ -9,7 +9,7 @@ export const h_choices = {
      'Worst Height Fit',
      'Worst Area Fit'
     ],
-    'Guillotine':
+  'guillotine':
     ['Best Shortside',
      'Best Longside',
      'Best Area',
@@ -17,7 +17,7 @@ export const h_choices = {
      'Worst Longside',
      'Worst Area',
     ],
-    'Maximal Rectangle':
+  'maximal_rectangle':
     ['Best Shortside',
      'Best Longside',
      'Best Area',
@@ -27,7 +27,7 @@ export const h_choices = {
      'Bottom Left',
      'Contact Point',
     ],
-    'Skyline':
+  'skyline':
     ['Bottom Left',
      'Best Fit'
     ]

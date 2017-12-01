@@ -20,12 +20,12 @@ class App extends Component {
                   editing: undefined,
                   activeSheet: 0,
                   algorithms: algo_choices,
-                  heuristics: h_choices['Shelf'],
+                  heuristics: h_choices['shelf'],
                   sorting:    sorting_choices,
                   bin_algos:  bin_algo_choices,
                   settings:   {'bin_width': 8, 
                                'bin_height': 4, 
-                               'bin_algo': 'bin_best_fit', 
+                               'bin_algo': 'bin_first_fit', 
                                'pack_algo': 'shelf', 
                                'heuristic': 'first_fit', 
                                'sorting': true, 
@@ -38,79 +38,8 @@ class App extends Component {
 
   
   //// SettingsForm Methods
-
-  handleSetWidth = (e) => {
-    var settings = {...this.state.settings}
-    settings['bin_width'] = e.target.value ? parseInt(e.target.value, 10) : 0
-    this.setState({settings})
-  }
-
-
-  handleSetHeight = (e) => {
-    var settings = {...this.state.settings}
-    settings['bin_height'] = e.target.value ? parseInt(e.target.value, 10) : 0
-    this.setState({settings})
-  }
-
-
-  handleSetBinAlgo = (e) => {
-    var settings = {...this.state.settings}
-    settings['bin_algo'] = e.target.value.replace(/ /g,"_");
-    this.setState({settings})
-  }
-
-
-  setNewSettingsState = (newSettings) => {
-    this.setState({
-       settings: {
-          ...this.state.settings,
-          newSettings
-          }
-          })
-  }
-
-
-  handleSetPackAlgo = (e) => {
-    const algo = e.target.value    
-    const heuristics = h_choices[e.target.value] 
-    var settings = {...this.state.settings}
-
-    settings['pack_algo'] = algo.replace(/ /g,"_").toLowerCase()
-    settings['heuristic'] = h_choices[algo][0].replace(/ /g,"_").toLowerCase()
-    this.setState({settings, heuristics})
-  }
-
-
-  handleSetHeuristic = (e) => {
-    var settings = {...this.state.settings}
-    settings['heuristic'] = e.target.value.replace(/ /g,"_").toLowerCase()
-    this.setState({settings})
-  }
-
-
-  handleSetSorting = (e) => {
-    var settings = {...this.state.settings}
-    settings['sorting_heuristic'] = e.target.value 
-    e.target.value === 'None' ? settings['sorting'] = false : settings['sorting'] = true
-    this.setState({settings})
-  }
-
-
-  handleSetRotation = () => {
-    var settings = {...this.state.settings}
-    settings['rotation'] = !settings['rotation']
-    this.setState({settings})
-  }
-
-  handleSetWastemap = (e) => {
-    var settings = {...this.state.settings}
-    e.target.value === 'True' ? settings['wastemap'] = true : settings['wastemap'] = false
-    this.setState({settings})
-  }
-
-  handleSetRectangleMerge = (e) => {
-    var settings = {...this.state.settings}
-    e.target.value === 'True' ? settings['rectangle_merge'] = true : settings['rectangle_merge'] = false
+  handleSetField = (newFieldData) => {
+    var settings = {...this.state.settings, ...newFieldData}
     this.setState({settings})
   }
 
@@ -123,6 +52,7 @@ class App extends Component {
   //// Ajax Methods
   
   handleFetchData = () => {
+    console.log(this.state.settings)
     const items = this.state.items.map(item => { return [parseInt(item['x'], 10), parseInt(item['y'], 10)]})
     const data = { 'items': items, 
                    'binmanager': this.state.settings
@@ -147,15 +77,9 @@ class App extends Component {
     return (
             <Columns style={{'padding': '5vh'}}> 
               <Column>
-                <SettingsForm handleSetWidth={this.handleSetWidth}
-                              handleSetHeight={this.handleSetHeight}
-                              handleSetBinAlgo={this.handleSetBinAlgo}
-                              handleSetPackAlgo={this.handleSetPackAlgo}
-                              handleSetHeuristic={this.handleSetHeuristic}
-                              handleSetSorting={this.handleSetSorting}
-                              handleSetRotation={this.handleSetRotation}
-                              handleSetWastemap={this.handleSetWastemap}
+                <SettingsForm handleSetRotation={this.handleSetRotation}
                               handleSetRectangleMerge={this.handleSetRectangleMerge}
+                              handleSetField={this.handleSetField}
                               clickEvent={this.handleFetchData} 
                               state={this.state}/>
                 <Columns>
