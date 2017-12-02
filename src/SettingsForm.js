@@ -165,7 +165,7 @@ class SettingsForm extends React.Component {
                 />
             </Field>
             <Field>
-              <Button text="go" clickEvent={this.props.clickEvent} style={{"margin-top": "1em"}}/>
+              <Button text="submit" clickEvent={this.props.clickEvent} style={{"marginTop": "1em"}}/>
             </Field>
           </div>
         </div>

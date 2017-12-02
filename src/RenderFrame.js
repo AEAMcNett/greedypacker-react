@@ -9,19 +9,19 @@ const RenderFrame = (props) => {
             <Tabs>
               {props.sheets.map((sheet, id) => (
                 <li className={props.activeSheet === id ? 'is-active' : ''} key={id}>
-                  <a onClick={props.handleActiveSheet(id)}>Sheet {id}</a>
+                  <a onClick={props.handleActiveSheet(id)}>Bin {id}</a>
                 </li>
               ))}
             </Tabs>
-            <SheetRender activeSheet={props.activeSheet} sheets={props.sheets} settings={props.settings}/>
+            <SheetRender activeSheet={props.activeSheet} bin_dims={props.bin_dims} sheets={props.sheets} settings={props.settings}/>
           </Box>
         )
 }
 
 
 const SheetRender = (props) => {
-  const bin_height    = props.settings['bin_height']
-  const bin_width     = props.settings['bin_width']
+  const bin_height    = props.bin_dims[1]
+  const bin_width     = props.bin_dims[0]
 
   var scaled_width
   var scaled_height
@@ -85,18 +85,5 @@ const SheetRender = (props) => {
           </div>
         )
 }
-
-//const ItemRects = (props) => {
-//  console.log(props)
-//  const rects = props.items.map((item, id) => { 
-//        return <Rect x={item.cornerPoint[0]*props.scalar}
-//                     y={item.cornerPoint[1]*props.scalar}
-//                     width={item.x*props.scaled_width}
-//                     height={item.y*props.scaled_height}
-//                     stroke={'black'}
-//                     strokeWidth={'1'}
-//                />})
-//  return rects
-//}
 
 export default RenderFrame

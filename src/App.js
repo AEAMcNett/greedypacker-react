@@ -16,6 +16,7 @@ class App extends Component {
     this.state = {
                   items: [{x: '', y: ''}],
                   sheets: [[]],
+                  bin_dims: [8, 4],
                   editing: undefined,
                   activeSheet: 0,
                   settings:   {'bin_width': 8, 
@@ -46,7 +47,7 @@ class App extends Component {
 
   //// Ajax Methods
   handleFetchData = () => {
-    //console.log(this.state.settings)
+    //console.log(this.state.sheets)
     const items = this.state.items.map(item => { return [parseInt(item['x'], 10), parseInt(item['y'], 10)]})
     const data = { 'items': items, 
                    'binmanager': this.state.settings
@@ -54,7 +55,8 @@ class App extends Component {
     axios.post('http://127.0.0.1:5000', data)
     .then( (response) => {
       this.setState({
-        sheets: response.data
+        sheets: response.data.sheets,
+        bin_dims: [response.data.bin_width, response.data.bin_height]
       })
     })
     .catch((error) => {
@@ -79,6 +81,7 @@ class App extends Component {
                   <RenderFrame handleActiveSheet={this.handleActiveSheet}
                                sheets={this.state.sheets}
                                activeSheet={this.state.activeSheet}
+                               bin_dims={this.state.bin_dims}
                                settings={this.state.settings}/>
                   </Column>
                   <Column class='is-one-third'>
