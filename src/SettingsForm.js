@@ -58,7 +58,7 @@ class SettingsForm extends React.Component {
       const algo = e.target.value.replace(/ /g,"_").toLowerCase()
       const pack_algo = {
         pack_algo: algo,
-        heuristic: h_choices[algo][0]
+        heuristic: h_choices[algo][0].replace(/ /g,"_").toLowerCase()
       }
       this.props.handleSetField(pack_algo)
       const heuristics = h_choices[algo]
