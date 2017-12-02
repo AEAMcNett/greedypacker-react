@@ -47,8 +47,9 @@ class App extends Component {
 
   //// Ajax Methods
   handleFetchData = () => {
-    //console.log(this.state.sheets)
+    console.log(this.state.items)
     const items = this.state.items.map(item => { return [parseInt(item['x'], 10), parseInt(item['y'], 10)]})
+    console.log(items)
     const data = { 'items': items, 
                    'binmanager': this.state.settings
                  }
