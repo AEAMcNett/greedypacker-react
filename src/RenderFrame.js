@@ -20,7 +20,6 @@ const RenderFrame = (props) => {
 
 
 const SheetRender = (props) => {
-  const currentItems  = props.sheets[props.activeSheet]
   const bin_height    = props.settings['bin_height']
   const bin_width     = props.settings['bin_width']
 
@@ -36,7 +35,14 @@ const SheetRender = (props) => {
     scaled_height = 400
     scaled_width  = bin_width * scalar
   }
-  //console.log(currentItems)
+  const currentItems  = props.sheets[props.activeSheet].map((item) => {
+    return { x: item.x*scalar, 
+             y: item.y*scalar, 
+             width: item.width*scalar,
+             height: item.height*scalar
+           }
+  })
+  console.log(currentItems)
 
   return (
           <div>
@@ -63,14 +69,13 @@ const SheetRender = (props) => {
                   />
                   {currentItems.map((item, id) => (
                     <Rect key={id}
-                          x={item.x*scalar}
-                          y={item.y*scalar}
-                          width={item.width*scalar}
-                          height={item.height*scalar}
+                          x={item.x}
+                          y={item.y}
+                          width={item.width}
+                          height={item.height}
                           stroke={'black'}
                           strokeWidth={'1'}
                   />))}
-
                 </Layer>
               </Stage>
           </div>
