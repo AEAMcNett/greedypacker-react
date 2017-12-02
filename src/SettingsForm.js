@@ -31,10 +31,7 @@ class SettingsForm extends React.Component {
         this.setState({hcolor: ''})
       }
     }
-    //this.handleSubmit = () => {
-    //  this.validate()
-    //  this.props.handleSubmit()
-    //}
+
 
     this.handleSetWidth = (e) => {
       const val = e.target.value ? parseInt(e.target.value, 10) : 0
@@ -136,7 +133,7 @@ class SettingsForm extends React.Component {
             </Field>
             <Field label='bin select algorithm'>
                 <Select changeEvent={this.handleSetBinAlgo}
-                        options={this.props.state.bin_algos}/>
+                        options={this.state.bin_algos}/>
             </Field>
             <Field label='packing algorithm'>
                 <Select changeEvent={this.handleSetPackAlgo}
@@ -159,7 +156,7 @@ class SettingsForm extends React.Component {
               <Field label='rectangle merge'>
                 <Select changeEvent={this.handleSetRectangleMerge}
                         options={['True', 'False']} />
-              </Field>) :null }
+              </Field>) : null }
             <Field>
                 <Checkbox label="Rotate:"
                           style={{'fontSize': '.5em'}}

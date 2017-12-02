@@ -2,13 +2,12 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import 'bulma/css/bulma.css'
 
-import SettingsForm from './SettingsForm.js'
-import ItemForm from './ItemsForm.js';
-import RenderFrame from './RenderFrame.js';
+import SettingsForm from  './SettingsForm.js'
+import ItemForm     from  './ItemsForm.js'
+import RenderFrame  from  './RenderFrame.js'
 
-import Columns from './BulmaComponents/columns.js';
-import Column from './BulmaComponents/column.js';
-import { h_choices, sorting_choices, bin_algo_choices, algo_choices } from './constants.js';
+import Columns      from  './BulmaComponents/columns.js'
+import Column       from  './BulmaComponents/column.js'
 
 
 class App extends Component {
@@ -19,10 +18,6 @@ class App extends Component {
                   sheets: [[]],
                   editing: undefined,
                   activeSheet: 0,
-                  algorithms: algo_choices,
-                  heuristics: h_choices['shelf'],
-                  sorting:    sorting_choices,
-                  bin_algos:  bin_algo_choices,
                   settings:   {'bin_width': 8, 
                                'bin_height': 4, 
                                'bin_algo': 'bin_first_fit', 
@@ -43,14 +38,13 @@ class App extends Component {
     this.setState({settings})
   }
 
-  //// Sync item list
+
   handleFormUpdates = (newItems) => {
     this.setState({items: newItems })
   }
 
 
   //// Ajax Methods
-  
   handleFetchData = () => {
     console.log(this.state.settings)
     const items = this.state.items.map(item => { return [parseInt(item['x'], 10), parseInt(item['y'], 10)]})
@@ -77,9 +71,7 @@ class App extends Component {
     return (
             <Columns style={{'padding': '5vh'}}> 
               <Column>
-                <SettingsForm handleSetRotation={this.handleSetRotation}
-                              handleSetRectangleMerge={this.handleSetRectangleMerge}
-                              handleSetField={this.handleSetField}
+                <SettingsForm handleSetField={this.handleSetField}
                               clickEvent={this.handleFetchData} 
                               state={this.state}/>
                 <Columns>
@@ -97,7 +89,6 @@ class App extends Component {
     );
   }
 }
-
 
 
 export default App;

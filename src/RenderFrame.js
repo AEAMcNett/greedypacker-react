@@ -1,6 +1,7 @@
-import React from 'react';
-import Box from './BulmaComponents/box.js';
-import Tabs from './BulmaComponents/tabs.js';
+import React    from  'react';
+import Box      from  './BulmaComponents/box.js';
+import Tabs     from  './BulmaComponents/tabs.js';
+import {Layer, Rect, Stage, Group} from 'react-konva'
 
 const RenderFrame = (props) => {
   return (
@@ -23,6 +24,26 @@ const SheetRender = (props) => {
 
   return (
           <div>
+              <Stage width={700} height={700}>
+                <Layer>
+                  <Rect
+                    x={0}
+                    y={0}
+                    width={50}
+                    height={50}
+                    stroke={'black'}
+                    strokeWidth={'1'}
+                  />
+                  <Rect
+                    x={50}
+                    y={0}
+                    width={50}
+                    height={50}
+                    stroke={'black'}
+                    strokeWidth={'1'}
+                  />
+                </Layer>
+              </Stage>
               {currentItems.map((item, itemId) => (
                 <ul key={itemId}>
                   <ul>Item {itemId}:
@@ -35,4 +56,6 @@ const SheetRender = (props) => {
           </div>
         )
 }
+
+
 export default RenderFrame
