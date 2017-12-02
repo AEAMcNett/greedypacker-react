@@ -124,11 +124,13 @@ class SettingsForm extends React.Component {
             <Field label='bin width'>
               <Input changeEvent={this.handleSetWidth}
                      cls="input is-small"
+                     value={this.props.state.settings.bin_width}
                      color={this.state.wcolor} />
             </Field>
             <Field label='bin height'>
               <Input changeEvent={this.handleSetHeight}
                      cls="input is-small"
+                     value={this.props.state.settings.bin_height}
                      color={this.state.hcolor} />
             </Field>
             <Field label='bin select algorithm'>

@@ -24,7 +24,7 @@ class App extends Component {
                                'pack_algo': 'shelf', 
                                'heuristic': 'first_fit', 
                                'sorting': true, 
-                               'sorting_heuristic': 'DESCA',
+                               'sorting_heuristic': 'ASCA',
                                'rotation': true, 
                                'wastemap': true,
                                'rectangle_merge': true} 
