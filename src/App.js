@@ -46,7 +46,7 @@ class App extends Component {
 
   //// Ajax Methods
   handleFetchData = () => {
-    console.log(this.state.settings)
+    //console.log(this.state.settings)
     const items = this.state.items.map(item => { return [parseInt(item['x'], 10), parseInt(item['y'], 10)]})
     const data = { 'items': items, 
                    'binmanager': this.state.settings
@@ -78,7 +78,8 @@ class App extends Component {
                   <Column class='is-two-thirds'>
                   <RenderFrame handleActiveSheet={this.handleActiveSheet}
                                sheets={this.state.sheets}
-                               activeSheet={this.state.activeSheet}/>
+                               activeSheet={this.state.activeSheet}
+                               settings={this.state.settings}/>
                   </Column>
                   <Column class='is-one-third'>
                     <ItemForm handleFormUpdates={this.handleFormUpdates} />
