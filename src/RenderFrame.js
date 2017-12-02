@@ -35,14 +35,18 @@ const SheetRender = (props) => {
     scaled_height = 400
     scaled_width  = bin_width * scalar
   }
+
   const currentItems  = props.sheets[props.activeSheet].map((item) => {
-    return { x: item.x*scalar, 
-             y: item.y*scalar, 
-             width: item.width*scalar,
-             height: item.height*scalar
+    var scaled_w = item.width*scalar
+    var scaled_h = item.height*scalar
+    var scaled_x = item.x*scalar
+    var scaled_y = Math.abs((item.y*scalar)-scaled_height)-scaled_h
+    return { x: scaled_x, 
+             y: scaled_y, 
+             width: scaled_w,
+             height: scaled_h
            }
   })
-  console.log(currentItems)
 
   return (
           <div>

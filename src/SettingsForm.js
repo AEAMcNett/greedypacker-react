@@ -159,15 +159,13 @@ class SettingsForm extends React.Component {
                 <Select changeEvent={this.handleSetRectangleMerge}
                         options={['True', 'False']} />
               </Field>) : null }
-            <Field>
-                <Checkbox label="Rotate:"
-                          style={{'fontSize': '.5em'}}
-                          defaultChecked={this.props.state.settings.rotation}
+            <Field label="Rotate:">
+                <Checkbox defaultChecked={this.props.state.settings.rotation}
                           clickEvent={this.handleSetRotate}
                 />
             </Field>
             <Field>
-              <Button text="go" clickEvent={this.props.clickEvent} cls="is-small" />
+              <Button text="go" clickEvent={this.props.clickEvent} style={{"margin-top": "1em"}}/>
             </Field>
           </div>
         </div>
