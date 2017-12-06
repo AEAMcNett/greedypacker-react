@@ -51,8 +51,8 @@ class App extends Component {
     const data = { 'items': items, 
                    'binmanager': this.state.settings
                  }
-    //axios.post('https://greedypacker-flask.herokuapp.com', data)
-    axios.post('http://127.0.0.1:5000', data)
+    axios.post('https://greedypacker-flask.herokuapp.com', data)
+    //axios.post('http://127.0.0.1:5000', data)
     .then( (response) => {
       this.setState({
         sheets: response.data.sheets,
