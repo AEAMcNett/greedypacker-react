@@ -41,7 +41,8 @@ const SheetRender = (props) => {
   return { x: scaled_x, 
              y: scaled_y, 
              width: scaled_w,
-             height: scaled_h
+             height: scaled_h,
+             id: item.id
            }
   })
 
@@ -70,7 +71,7 @@ const SheetRender = (props) => {
                   />
                   {currentItems.map((item, id) => (
                     <Group key={id}>
-                      <Text x={item.x+(item.width/2)} y={item.y+(item.height/2)} text={id+1} />
+                      <Text x={item.x+(item.width/2)} y={item.y+(item.height/2)} text={item.id} />
                       <Rect key={id}
                             x={item.x}
                             y={item.y}

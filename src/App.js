@@ -14,7 +14,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-                  items: [{x: '', y: ''}],
+                  items: [{x: '', y: '', id: ''}],
                   sheets: [[]],
                   bin_dims: [8, 4],
                   editing: undefined,
@@ -47,11 +47,12 @@ class App extends Component {
 
   //// Ajax Methods
   handleFetchData = () => {
-    const items = this.state.items.map(item => { return [parseInt(item['x'], 10), parseInt(item['y'], 10)]})
+    const items = this.state.items.map(item => { return [parseInt(item['x'], 10), parseInt(item['y'], 10), parseInt(item['id'], 10)]})
     const data = { 'items': items, 
                    'binmanager': this.state.settings
                  }
-    axios.post('https://greedypacker-flask.herokuapp.com', data)
+    //axios.post('https://greedypacker-flask.herokuapp.com', data)
+    axios.post('http://127.0.0.1:5000', data)
     .then( (response) => {
       this.setState({
         sheets: response.data.sheets,

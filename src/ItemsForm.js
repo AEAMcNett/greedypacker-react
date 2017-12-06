@@ -10,12 +10,7 @@ class ItemForm extends React.Component {
     super(props)
     this.state = {  xcolor: '',
                     ycolor: '',
-                    items: [{ x: '1',
-                             y: '2',
-                             editing: true,
-                             xvalid: true,
-                             yvalid: true
-                           }]
+                    items: []
                  }
   }
 
@@ -24,6 +19,7 @@ class ItemForm extends React.Component {
     this.setState({
       items: this.state.items.concat([{x: '',
                                        y: '',
+                                       id: this.state.items.length + 1,
                                        editing: true, 
                                        xvalid: true,
                                        yvalid: true
@@ -97,7 +93,7 @@ const ItemDisplay = (props) => {
   if (props.item.editing) {
     return (
         <PanelBlock type='anchor' style={style}>
-          <p>{props.id+1}:</p>
+          <p>{props.item.id}:</p>
           <Input changeEvent={props.handleFieldUpdate(props.id, 'x')} 
                  cls="is-small item-form"
                  placeholder="width"
@@ -126,7 +122,7 @@ const ItemDisplay = (props) => {
     return (
       <PanelBlock type='anchor' clickEvent={props.handleSubmitItem(props.id)} 
                   style={style}>
-        <p>{props.id+1}:</p>
+        <p>{props.item.id}:</p>
         <p>Width: {props.item.x}</p>
         <p>Height: {props.item.y}</p>
       </PanelBlock>
